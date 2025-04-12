@@ -32,7 +32,9 @@ class ProductPage(BasePage):
 
     def should_be_product_url(self):
         # реализуйте проверку на корректный url адрес
-        assert "the-shellcoders-handbook" in self.browser.current_url, "Login link is not presented" 
+        product_name = self.get_product_name()
+        #print(product_name.lower().replace(" ","-"), self.browser.current_url)
+        assert product_name.lower().replace(" ","-") in self.browser.current_url, "Login link is not presented" 
 
     def should_be_product_price(self):
         # реализуйте проверку, что есть форма логина
@@ -57,18 +59,22 @@ class ProductPage(BasePage):
 
     def allert_checking_product_name_added(self):
        name_product =  self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
-       print(name_product)
+       #print(name_product)
        name_product_alert = self.browser.find_element(*ProductPageLocators.ALERT_PRODUCT_NAME).text
-       print(name_product_alert)
+       #print(name_product_alert)
        assert name_product == name_product_alert
     
     def allert_checking_product_price_added(self):
         price_product =  self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
-        print(price_product)
+        #print(price_product)
         price_product_alert = self.browser.find_element(*ProductPageLocators.ALERT_PRODUCT_PRICE).text
-        print(price_product_alert)
+        #print(price_product_alert)
         assert price_product == price_product_alert
     
     def should_be_add_to_alert_buttons(self):
         assert self.is_element_present(*ProductPageLocators.SUCCESS_BTN_VIEW_BASKET), "'SUCCESS_BTN_VIEW_BASKET' button is not presented"
         assert self.is_element_present(*ProductPageLocators.SUCCESS_BTN_CHEKOUT_NOW), "'SUCCESS_BTN_CHEKOUT_NOW' button is not presented"
+
+    def get_product_name(self):
+        self.product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
+        return self.product_name
