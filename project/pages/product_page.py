@@ -85,16 +85,13 @@ class ProductPage(BasePage):
         return self.product_name
     
     def should_not_be_success_messages(self):
-        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_NAME), \
+        assert self.is_not_element_present(*ProductPageLocators.ALERT_PRODUCT_NAME), \
         "Success message with product name is presented, but should not be"
-        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_PRICE), \
+        assert self.is_not_element_present(*ProductPageLocators.ALERT_PRODUCT_PRICE), \
         "Success message with product price is presented, but should not be"
-
-    def should_disappear_success_messages(self, locator, timeout=4):
-        try:
-            WebDriverWait(self.browser, timeout, 1, TimeoutException).\
-                until_not(EC.presence_of_element_located((locator)))
-        except TimeoutException:
-            return False
-
-        return True
+    
+    def should_disappear_success_messages(self):
+        assert self.is_disappeared(*ProductPageLocators.ALERT_PRODUCT_NAME), \
+        "Success message with product name hasn't disappeared, but should be"
+        assert self.is_disappeared(*ProductPageLocators.ALERT_PRODUCT_PRICE), \
+        "Success message with product price hasn't disappeared, but should be"
