@@ -6,6 +6,10 @@ import math
 # from .login_page import LoginPage
 import time
 
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+
 class ProductPage(BasePage):
 
     # link = 'http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear'
@@ -54,11 +58,12 @@ class ProductPage(BasePage):
         self.should_be_add_to_basket_button()
         button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
         button.click()
-        self.solve_quiz_and_get_code()
+        # self.solve_quiz_and_get_code() # закоменитить в случае если нет на странице allert
         #time.sleep(600)
 
     def allert_checking_product_name_added(self):
-       name_product =  self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
+       element_name_product =  WebDriverWait(self.browser, 10).until(EC.visibility_of_element_located(ProductPageLocators.PRODUCT_NAME))
+       name_product = element_name_product.text
        #print(name_product)
        name_product_alert = self.browser.find_element(*ProductPageLocators.ALERT_PRODUCT_NAME).text
        #print(name_product_alert)
@@ -78,3 +83,18 @@ class ProductPage(BasePage):
     def get_product_name(self):
         self.product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
         return self.product_name
+    
+    def should_not_be_success_messages(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_NAME), \
+        "Success message with product name is presented, but should not be"
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_PRICE), \
+        "Success message with product price is presented, but should not be"
+
+    def should_disappear_success_messages(self, locator, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException).\
+                until_not(EC.presence_of_element_located((locator)))
+        except TimeoutException:
+            return False
+
+        return True
