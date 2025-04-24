@@ -3,10 +3,15 @@ from selenium.webdriver.common.by import By
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
 
+class BasePageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+
 
 class LoginPageLocators():
-    LOGIN_FORM = (By.CSS_SELECTOR, "#login_form")
-    REGISTER_FORM = (By.CSS_SELECTOR, "#register_form")
+    #Перенесено в BasePageLocators
+    # LOGIN_FORM = (By.CSS_SELECTOR, "#login_form")
+    # REGISTER_FORM = (By.CSS_SELECTOR, "#register_form")
     REGISTER_EMAIL_FIELD = (By.CSS_SELECTOR, "#id_registration-email")
     REGISTER_PASSWORD_FIELD = (By.CSS_SELECTOR, "#id_registration-password1")
     REGISTER_CONFIRM_PASSWORD_FIELD = (By.CSS_SELECTOR, "#id_registration-password2")
