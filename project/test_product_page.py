@@ -26,6 +26,7 @@ def test_guest_can_add_product_to_basket(browser, link):
     page.allert_checking_product_price_added()
     page.should_be_add_to_alert_buttons()
 
+@pytest.mark.xfail(reason="Success messages should appear after adding product to basket!")
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser, link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"):
     page = ProductPage(browser, link)
     page.open()
@@ -37,8 +38,9 @@ def test_guest_cant_see_success_message(browser, link = "http://selenium1py.pyth
     page.open()
     page.should_not_be_success_messages()
 
-# def test_message_disappeared_after_adding_product_to_basket(browser, link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"):
-#     page = ProductPage(browser, link)
-#     page.open()
-#     page.add_to_basket()
-#     page.should_disappear_success_messages(ProductPageLocators.SUCCESS_DEFERRED_BENEFIT_OFFER)
+@pytest.mark.xfail(reason="Success messages shouldn't disappear after adding product to basket!")
+def test_message_disappeared_after_adding_product_to_basket(browser, link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"):
+    page = ProductPage(browser, link)
+    page.open()
+    page.add_to_basket()
+    page.should_disappear_success_messages()

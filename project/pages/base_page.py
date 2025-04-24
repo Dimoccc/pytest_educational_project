@@ -25,18 +25,20 @@ class BasePage():
     def is_not_element_present(self, how, what, timeout=4):
         try:
             WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
-            result = False
         except TimeoutException:
-            result = True
+            return True
 
-        assert result is True, 'Element present!'
+        return False
+
+        assert result is True, 'Element present! is_not_element_present'
     
     
     def is_disappeared(self, how, what, timeout=4):
         try:
-            WebDriverWait(self.browser, timeout, 1, TimeoutException).\
-                until_not(EC.presence_of_element_located((how, what)))
+            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return False
 
         return True
+
+        assert result is True, 'Element appeared! is_disappeared'
