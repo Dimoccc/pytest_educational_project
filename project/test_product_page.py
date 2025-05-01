@@ -1,7 +1,9 @@
 # Запуск  pytest -s test_product_page.py
 
 from pages.product_page import ProductPage
+from pages.basket_page import BasketPage
 from pages.locators import ProductPageLocators
+
 import pytest
 
 # @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
@@ -57,3 +59,10 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page = ProductPage(browser, link)
     page.open()
     page.should_be_login_link()
+
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"):
+    basket_page = BasketPage(browser, link)
+    basket_page.open()
+    basket_page.go_to_basket()
+    basket_page.should_not_be_products_in_basket()
+    basket_page.should_not_be_products_in_basket_text()

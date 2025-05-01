@@ -6,7 +6,9 @@ class MainPageLocators():
 class BasePageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
-
+    BUTTON_GO_TO_BUSKET = (By.XPATH, "//span/a[contains(@class, 'btn')][contains(@href, 'basket')]")
+    BUTTON_PROCEED_TO_CHECKOUT = (By.XPATH, "//div/a[contains(@class, 'btn')][contains(@href, 'checkout')]")
+    EMPTY_BASKET_TEXT = (By.CSS_SELECTOR, "#content_inner > p") 
 
 class LoginPageLocators():
     #Перенесено в BasePageLocators
@@ -16,6 +18,7 @@ class LoginPageLocators():
     REGISTER_PASSWORD_FIELD = (By.CSS_SELECTOR, "#id_registration-password1")
     REGISTER_CONFIRM_PASSWORD_FIELD = (By.CSS_SELECTOR, "#id_registration-password2")
     REGISTER_BUTTON = (By.CSS_SELECTOR, "button[name='registration_submit']")
+
 
 class ProductPageLocators:
     # link = 'http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear'

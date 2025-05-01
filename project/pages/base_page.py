@@ -13,7 +13,11 @@ class BasePage():
         self.browser.implicitly_wait(timeout)
 
     def go_to_login_page(self):
-        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK_INVALID)
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        link.click()
+
+    def go_to_basket(self):
+        link = self.browser.find_element(*BasePageLocators.BUTTON_GO_TO_BUSKET)
         link.click()
 
     def should_be_login_link(self):
@@ -50,3 +54,5 @@ class BasePage():
         return True
 
         assert result is True, 'Element appeared! is_disappeared'
+    
+    
