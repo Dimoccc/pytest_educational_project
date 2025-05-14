@@ -65,9 +65,10 @@ class ProductPage(BasePage):
        element_name_product =  WebDriverWait(self.browser, 10).until(EC.visibility_of_element_located(ProductPageLocators.PRODUCT_NAME))
        name_product = element_name_product.text
        #print(name_product)
-       name_product_alert = self.browser.find_element(*ProductPageLocators.ALERT_PRODUCT_NAME).text
+       name_product_alert = WebDriverWait(self.browser, 10).until(EC.visibility_of_element_located(ProductPageLocators.ALERT_PRODUCT_NAME))
+       name_product_alert_text = name_product_alert.text.strip()
        #print(name_product_alert)
-       assert name_product == name_product_alert
+       assert name_product == name_product_alert_text
     
     def allert_checking_product_price_added(self):
         price_product =  self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
