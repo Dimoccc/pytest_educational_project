@@ -3,6 +3,8 @@
 from pages.product_page import ProductPage
 from pages.basket_page import BasketPage
 from pages.locators import ProductPageLocators
+from pages.login_page import LoginPage
+import random
 
 import pytest
 
@@ -66,3 +68,30 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, link
     basket_page.go_to_basket()
     basket_page.should_not_be_products_in_basket()
     basket_page.should_not_be_products_in_basket_text()
+
+@pytest.mark.registered_user
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser, link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"):
+        register_page = LoginPage(browser, link)
+        register_page.open()
+        email = str(random.random()) + "@fakemail.com"  # генерация случайного email-адреса, чтобы избежать повторения в тестах
+        password = "test_password"
+        register_page.register_new_user(email, password)
+        register_page.should_be_authorized_user()
+
+    @pytest.mark.xfail(reason="Success messages should appear after adding product to basket!")
+    def test_user_cant_see_success_message_after_adding_product_to_basket(self, browser, link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"):
+        page = ProductPage(browser, link)
+        page.open()
+        page.add_to_basket()
+        page.should_not_be_success_messages()
+    
+    def test_user_can_add_product_to_basket(self, browser, link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"):
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_be_product_page()
+        page.add_to_basket()
+        page.allert_checking_product_name_added()
+        page.allert_checking_product_price_added()
+        page.should_be_add_to_alert_buttons()
