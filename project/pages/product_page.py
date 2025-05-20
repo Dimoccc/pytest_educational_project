@@ -51,15 +51,13 @@ class ProductPage(BasePage):
     def should_be_add_to_basket_button(self):
         assert self.is_element_present(*ProductPageLocators.ADD_TO_BASKET_BUTTON), "'Add to basket' button is not presented"
 
-    # def shouuld_success_message(self):
-    #     name_product = self.is_element_present(*ProductPageLocators.PRODUCT_NAME)
 
     def add_to_basket(self):
         self.should_be_add_to_basket_button()
         button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
         button.click()
         # self.solve_quiz_and_get_code() # закоменитить в случае если нет на странице allert
-        #time.sleep(600)
+        #time.sleep(60)
 
     def allert_checking_product_name_added(self):
        element_name_product =  WebDriverWait(self.browser, 10).until(EC.visibility_of_element_located(ProductPageLocators.PRODUCT_NAME))

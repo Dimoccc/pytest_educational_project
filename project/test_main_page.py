@@ -7,12 +7,6 @@ import pytest
 #pytest -v --tb=line --language=en test_main_page.py
 #Запустить с mark = login_quest  pytest -v -m login_guest test_main_page.py
 
-# link = "http://selenium1py.pythonanywhere.com/"
-
-# def go_to_login_page(browser):
-    # login_link = browser.find_element(By.CSS_SELECTOR, "#login_link")
-    # login_link.click()
-    # ...
 @pytest.mark.login_guest
 class TestLoginFromMainPage():
     def test_guest_can_go_to_login_page(self, browser): 
